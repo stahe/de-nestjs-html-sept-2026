@@ -1,0 +1,1824 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-nestjs-html-sept-2026/das-action-modell.html">
+      
+      
+        <link rel="prev" href="controller-actions-routing.html">
+      
+      
+        <link rel="next" href="die-view-und-ihr-modell.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>3. Das Action-Modell - Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-das-action-modell" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Das Action-Modell
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-nestjs-html-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-nestjs-html-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="einfuhrung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einführung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="das-action-modell.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-beispiel-07-url-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Beispiel 07: URL-Parameter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-beispiel-08-ein-durch-eine-klasse-beschriebenes-action-modell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Beispiel 08: Ein durch eine Klasse beschriebenes Action-Modell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-beispiel-09-von-der-action-durchgefuhrte-validierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Beispiel 09: Von der Action durchgeführte Validierung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-beispiel-10-mehrfache-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Beispiel 10: Mehrfache Parameter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-beispiel-11-parameter-einer-post-anfrage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5. Beispiel 11: Parameter einer POST-Anfrage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-beispiel-12-eigene-pipes-und-dekoratoren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6. Beispiel 12: Eigene Pipes und Dekoratoren
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6. Beispiel 12: Eigene Pipes und Dekoratoren">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#361-eine-pipe-datefrpipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.1. Eine Pipe: DateFrPipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#362-ein-parameterdekorator-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.2. Ein Parameterdekorator: @Language()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#363-der-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.3. Der Controller
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#364-fazit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.4. Fazit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="geltungsbereiche-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Geltungsbereiche von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="3-das-action-modell">3. <span style="color: #2e74b5">Das Action-Modell</span></h1>
+<p>Eine Action benötigt Informationen, die der Browser sendet: die URL-Parameter (<strong><em>[?name=martin&amp;age=42]</em></strong>), Formularfelder und Routenparameter. Der ursprüngliche Kurs bezeichnet all diese Informationen <strong>als das Modell der Action</strong>. Dieses Kapitel zeigt, wie <em>[NestJS]</em> es der Action bereitstellt, es <strong>in den richtigen Typ umwandelt</strong> und <strong>validiert</strong>.</p>
+<h2 id="31-beispiel-07-url-parameter">3.1. <span style="color: #2e74b5">Beispiel 07: URL-Parameter</span></h2>
+<p>Die Datei <strong><em>[src/parameters.controller.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Controller</span><span class="p">,</span><span class="w"> </span><span class="nx">DefaultValuePipe</span><span class="p">,</span><span class="w"> </span><span class="nx">Get</span><span class="p">,</span><span class="w"> </span><span class="nx">ParseIntPipe</span><span class="p">,</span><span class="w"> </span><span class="nx">Query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kd">@Controller</span><span class="p">(</span><span class="s1">'parameters'</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ParametersController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="c1">// /parameters/action01?name=martin</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action01'</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nx">action01</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`name = [</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">], of type </span><span class="si">${</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">name</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="c1">// /parameters/action02?age=42: ein Parameter ist IMMER ein String</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action02'</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">  </span><span class="nx">action02</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">'age'</span><span class="p">)</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`age = [</span><span class="si">${</span><span class="nx">age</span><span class="si">}</span><span class="sb">], of type </span><span class="si">${</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">age</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">  </span><span class="c1">// /parameters/action03?age=42: ParseIntPipe konvertiert (oder lehnt ab)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action03'</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">  </span><span class="nx">action03</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">'age'</span><span class="p">,</span><span class="w"> </span><span class="nx">ParseIntPipe</span><span class="p">)</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`age = [</span><span class="si">${</span><span class="nx">age</span><span class="si">}</span><span class="sb">], of type </span><span class="si">${</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">age</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">  </span><span class="c1">// /parameters/action04?page=2: ein Standardwert, falls der Parameter fehlt</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action04'</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">  </span><span class="nx">action04</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">'page'</span><span class="p">,</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">DefaultValuePipe</span><span class="p">(</span><span class="mf">1</span><span class="p">),</span><span class="w"> </span><span class="nx">ParseIntPipe</span><span class="p">)</span><span class="w"> </span><span class="nx">page</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`page = [</span><span class="si">${</span><span class="nx">page</span><span class="si">}</span><span class="sb">], of type </span><span class="si">${</span><span class="ow">typeof</span><span class="w"> </span><span class="nx">page</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">  </span><span class="c1">// /parameters/action05?name=martin&amp;age=42: alle Parameter auf einmal</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action05'</span><span class="p">)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">  </span><span class="nx">action05</span><span class="p">(</span><span class="kd">@Query</span><span class="p">()</span><span class="w"> </span><span class="nx">parameters</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">parameters</span><span class="p">;</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diesen Code im Einzelnen durch:</p>
+<ul>
+<li>Zeilen 6–9: <strong><em>[@Query(&#x27;name&#x27;)]</em></strong> injiziert den Wert des Parameters <strong><em>[name]</em></strong> aus der URL (der Teil nach <strong><em>[?]</em></strong>, die <strong>Query-String</strong> oder <em>[query string]</em> genannt);</li>
+<li>Zeilen 12–15: Der Parameter <strong><em>[age]</em></strong> ist mit dem Typ <strong><em>[number]</em></strong> deklariert ... doch dieser Typ ist lediglich eine <strong>[TypeScript]</strong><em>-Deklaration</em>, die zur Kompilierzeit entfernt wird. Wir erhalten <strong>immer einen String</strong>, wie die Ausführung zeigt;</li>
+<li>Zeilen 18–21: <strong><em>[ParseIntPipe]</em></strong> ist eine <strong>Pipe</strong>: ein Objekt, das den Wert eines Parameters <strong>umwandelt</strong> (und validiert), bevor er die Action erreicht. Hier wird der String <strong><em>[&#x27;42&#x27;]</em></strong> zur Zahl 42; ein nicht numerischer String führt zu einem 400-Fehler (<strong>Bad Request</strong>), ohne dass die Action ausgeführt wird;</li>
+<li>Zeilen 24–27: Die Pipes werden verkettet: <strong><em>[DefaultValuePipe(1)]</em></strong> ersetzt einen fehlenden Parameter durch 1, anschließend wandelt <strong><em>[ParseIntPipe]</em></strong> ihn um;</li>
+<li>Zeilen 30–33: <strong><em>[@Query()],</em></strong> ohne Argumente, injiziert ein Objekt, das <strong>alle</strong> Parameter der URL enthält.</li>
+</ul>
+<p>Die Ergebnisse:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>curl -i "http://localhost:3000/parameters/action01?name=martin"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>Content-Length: 31
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>name = [martin], of type string
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>curl -i "http://localhost:3000/parameters/action01"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>Content-Length: 37
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>name = [undefined], of type undefined
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>curl -i "http://localhost:3000/parameters/action02?age=42"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>Content-Length: 26
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>age = [42], of type string
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>curl -i "http://localhost:3000/parameters/action03?age=42"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>Content-Length: 26
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>age = [42], of type number
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>curl -i "http://localhost:3000/parameters/action03?age=abc"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>Content-Length: 99
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>{"message":"Validation failed (numeric string is expected)","error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>curl -i "http://localhost:3000/parameters/action04"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>Content-Length: 26
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>page = [1], of type number
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>curl -i "http://localhost:3000/parameters/action04?page=2"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>Content-Length: 26
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>page = [2], of type number
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>curl -i "http://localhost:3000/parameters/action05?name=martin&amp;age=42"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>Content-Length: 28
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a>{"name":"martin","age":"42"}
+</code></pre></div></td></tr></table></div>
+<p>Die Anführungszeichen um die URL sind notwendig, wenn sie das Zeichen <strong><em>[&amp;]</em></strong> enthält, das für die Konsole eine besondere Bedeutung hat. Beachten Sie Folgendes:</p>
+<ul>
+<li>Ein fehlender Parameter wird als <strong><em>[undefined]</em></strong> behandelt;</li>
+<li>Ein vorhandener Parameter ist unabhängig vom deklarierten Typ ein String;</li>
+<li>Eine Pipe dient dazu, einen Parameter umzuwandeln und zu validieren, und liefert den Statuscode 400, wenn der Wert ungültig ist.</li>
+</ul>
+<p><img src="images/10000000000002BE00000070B7E4552A.png" width="428" height="68" style="width:11.322cm;height:1.806cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE00000070B7E4552A.png" /></p>
+<h2 id="32-beispiel-08-ein-durch-eine-klasse-beschriebenes-action-modell">3.2. <span style="color: #2e74b5">Beispiel 08: Ein durch eine Klasse beschriebenes Action-Modell</span></h2>
+<p>Hat eine Action mehrere Parameter, werden sie durch eine <strong>Klasse</strong> beschrieben, die oft <em>[DTO]</em> (<em>[Data Transfer Object]</em>) genannt wird. Jedes Feld der Klasse hat <strong>Validierungsdekoratoren</strong> aus der Bibliothek <em>[class-validator]</em>. Diese entsprechen den Attributen <strong><em>[[Required]]</em></strong>, <strong><em>[[Range]]</em></strong> usw. von <em>[ASP.NET MVC]</em>.</p>
+<p>Die Datei <strong><em>[src/person.dto.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span>
+<span class="normal"><a href="#__codelineno-17-16">16</a></span>
+<span class="normal"><a href="#__codelineno-17-17">17</a></span>
+<span class="normal"><a href="#__codelineno-17-18">18</a></span>
+<span class="normal"><a href="#__codelineno-17-19">19</a></span>
+<span class="normal"><a href="#__codelineno-17-20">20</a></span>
+<span class="normal"><a href="#__codelineno-17-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Type</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'class-transformer'</span><span class="p">;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">IsEmail</span><span class="p">,</span><span class="w"> </span><span class="nx">IsIn</span><span class="p">,</span><span class="w"> </span><span class="nx">IsInt</span><span class="p">,</span><span class="w"> </span><span class="nx">IsNotEmpty</span><span class="p">,</span><span class="w"> </span><span class="nx">IsOptional</span><span class="p">,</span><span class="w"> </span><span class="nx">Length</span><span class="p">,</span><span class="w"> </span><span class="nx">Max</span><span class="p">,</span><span class="w"> </span><span class="nx">Min</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'class-validator'</span><span class="p">;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">PersonDto</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">  </span><span class="kd">@IsNotEmpty</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'the name is required'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">  </span><span class="kd">@Length</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'the name must have 2 to 20 characters'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a>
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="w">  </span><span class="kd">@Type</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">Number</span><span class="p">)</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="w">  </span><span class="kd">@IsInt</span><span class="p">({</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'the age must be an integer'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="w">  </span><span class="kd">@Min</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'the age must be positive'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="w">  </span><span class="kd">@Max</span><span class="p">(</span><span class="mf">150</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'the age cannot exceed 150'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w">  </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="w">  </span><span class="kd">@IsIn</span><span class="p">([</span><span class="s1">'Mr'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Mme'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Melle'</span><span class="p">],</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'unknown title'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17"></a>
+<a id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="w">  </span><span class="kd">@IsOptional</span><span class="p">()</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19"></a><span class="w">  </span><span class="kd">@IsEmail</span><span class="p">({},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'invalid email address'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20"></a><span class="w">  </span><span class="nx">email?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diesen Code im Einzelnen durch:</p>
+<ul>
+<li>Zeile 1: <strong><em>[@Type]</em></strong> stammt aus der Bibliothek <em>[class-transformer]</em>, die die empfangenen Daten <strong>umwandelt</strong>;</li>
+<li>Zeile 2: die Validierungsdekoratoren aus <em>[class-validator]</em>;</li>
+<li>Zeilen 5–7: Der Name ist erforderlich (<strong><em>[@IsNotEmpty]</em></strong>) und muss zwischen 2 und 20 Zeichen lang sein (<strong><em>[@Length]</em></strong>). Jeder Dekorator akzeptiert eine eigene Fehlermeldung;</li>
+<li>Zeilen 9–13: <strong><em>[@Type(() =&gt; Number)]</em></strong> verlangt, dass der empfangene String vor der Validierung in eine Zahl umgewandelt wird: eine ganze Zahl (<strong><em>[@IsInt]</em></strong>) zwischen 0 und 150 (<strong><em>[@Min]</em></strong>, <strong><em>[@Max]</em></strong>);</li>
+<li>Zeilen 15–16: Die Anrede muss einer der Werte einer Liste sein;</li>
+<li>Zeilen 18–20: Die E-Mail-Adresse ist optional (<strong><em>[@IsOptional]</em></strong>); falls vorhanden, muss sie gültig sein (<strong><em>[@IsEmail]</em></strong>).</li>
+</ul>
+<p>Die Datei <strong><em>[src/persons.controller.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-18-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-18-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-18-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-18-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-18-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-18-10">10</a></span>
+<span class="normal"><a href="#__codelineno-18-11">11</a></span>
+<span class="normal"><a href="#__codelineno-18-12">12</a></span>
+<span class="normal"><a href="#__codelineno-18-13">13</a></span>
+<span class="normal"><a href="#__codelineno-18-14">14</a></span>
+<span class="normal"><a href="#__codelineno-18-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Controller</span><span class="p">,</span><span class="w"> </span><span class="nx">Get</span><span class="p">,</span><span class="w"> </span><span class="nx">Query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PersonDto</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./person.dto'</span><span class="p">;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="kd">@Controller</span><span class="p">(</span><span class="s1">'persons'</span><span class="p">)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">PersonsController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">  </span><span class="c1">// /persons/action01?name=martin&amp;age=42&amp;title=Mr</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action01'</span><span class="p">)</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w">  </span><span class="nx">action01</span><span class="p">(</span><span class="kd">@Query</span><span class="p">()</span><span class="w"> </span><span class="nx">person</span><span class="o">:</span><span class="w"> </span><span class="kt">PersonDto</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w">      </span><span class="nx">person</span><span class="p">,</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="w">      </span><span class="nx">ageType</span><span class="o">:</span><span class="w"> </span><span class="kt">typeof</span><span class="w"> </span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="w">      </span><span class="nx">isAPersonDto</span><span class="o">:</span><span class="w"> </span><span class="kt">person</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nx">PersonDto</span><span class="p">,</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Zeile 8: Die Action erhält ein <strong><em>[PersonDto]</em></strong>. Die Action gibt die empfangene Person und den Typ ihres Alters zurück und prüft, dass es sich tatsächlich um eine Instanz der Klasse <strong><em>[PersonDto]</em></strong> handelt.</p>
+<p>Damit die Dekoratoren der Klasse angewendet werden, muss die Validierung einmalig und global in <strong><em>[main.ts]</em></strong> aktiviert werden:</p>
+<p>Die Datei <strong><em>[src/main.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-19-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-19-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-19-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-19-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-19-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-19-10">10</a></span>
+<span class="normal"><a href="#__codelineno-19-11">11</a></span>
+<span class="normal"><a href="#__codelineno-19-12">12</a></span>
+<span class="normal"><a href="#__codelineno-19-13">13</a></span>
+<span class="normal"><a href="#__codelineno-19-14">14</a></span>
+<span class="normal"><a href="#__codelineno-19-15">15</a></span>
+<span class="normal"><a href="#__codelineno-19-16">16</a></span>
+<span class="normal"><a href="#__codelineno-19-17">17</a></span>
+<span class="normal"><a href="#__codelineno-19-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NestFactory</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/core'</span><span class="p">;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ValidationPipe</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AppModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./app.module'</span><span class="p">;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">bootstrap</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">NestFactory</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">AppModule</span><span class="p">);</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="w">  </span><span class="c1">// automatische Validierung ALLER Action-Modelle, die durch eine Klasse beschrieben sind</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8"></a><span class="w">  </span><span class="nx">app</span><span class="p">.</span><span class="nx">useGlobalPipes</span><span class="p">(</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9"></a><span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">ValidationPipe</span><span class="p">({</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="w">      </span><span class="nx">transform</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// konvertiert die empfangenen Strings in die deklarierten Typen</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="w">      </span><span class="nx">whitelist</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// entfernt die in der Klasse nicht deklarierten Felder</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12"></a><span class="w">    </span><span class="p">}),</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13"></a><span class="w">  </span><span class="p">);</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">);</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Server started on http://localhost:3000'</span><span class="p">);</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16"></a><span class="p">}</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17"></a>
+<a id="__codelineno-19-18" name="__codelineno-19-18"></a><span class="nx">bootstrap</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 8–13: Eine <strong>globale Pipe</strong>, <strong><em>[ValidationPipe]</em></strong>, wird auf alle Parameter aller Actions angewendet. Bei einem Parameter, dessen Typ eine Klasse ist, prüft sie die Einschränkungen ihrer Dekoratoren;</li>
+<li>Zeile 10: <strong><em>[transform: true]</em></strong>: Die Action erhält eine echte <strong>Instanz</strong> von <strong><em>[PersonDto]</em></strong>, deren Felder umgewandelt wurden (<strong><em>[@Type]</em></strong>);</li>
+<li>Zeile 11: <strong><em>[whitelist: true]</em></strong>: Parameter, die keinem Feld der Klasse entsprechen, werden entfernt.</li>
+</ul>
+<p>Eine gültige Anfrage mit einem Parameter (<strong><em>[pirate]), der</em></strong> nicht in der Klasse deklariert ist:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>curl -i "http://localhost:3000/persons/action01?name=martin&amp;age=42&amp;title=Mr&amp;pirate=1"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span>
+<span class="normal"><a href="#__codelineno-21-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a>Content-Length: 89
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a>{"person":{"name":"martin","age":42,"title":"Mr"},"ageType":"number","isAPersonDto":true}
+</code></pre></div></td></tr></table></div>
+<p>Das Alter ist tatsächlich zu einer Zahl geworden, und der Parameter <strong><em>[pirate]</em></strong> ist verschwunden. Eine ungültige Anfrage:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>curl -i "http://localhost:3000/persons/action01?name=m&amp;age=abc&amp;title=Dr&amp;email=xx"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span>
+<span class="normal"><a href="#__codelineno-23-4">4</a></span>
+<span class="normal"><a href="#__codelineno-23-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a>Content-Length: 216
+<a id="__codelineno-23-4" name="__codelineno-23-4"></a>
+<a id="__codelineno-23-5" name="__codelineno-23-5"></a>{"message":["the name must have 2 to 20 characters","the age cannot exceed 150","the age must be positive","the age must be an integer","unknown title","invalid email address"],"error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<p><strong><em>[ValidationPipe]</em></strong> hat die Anfrage mit einem 400-Fehler abgelehnt, dessen Rumpf (JSON) die Fehlermeldungen auflistet. Die Action wurde nicht ausgeführt. Dasselbe Ergebnis erhalten wir ohne jegliche Parameter:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>curl -i http://localhost:3000/persons/action01
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span>
+<span class="normal"><a href="#__codelineno-25-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a>Content-Length: 215
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a>{"message":["the name must have 2 to 20 characters","the name is required","the age cannot exceed 150","the age must be positive","the age must be an integer","unknown title"],"error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<p>Dieses Verhalten ist für einen JSON-Server zu erwarten, der von einem <em>[JavaScript]</em>-Client abgefragt wird, der Fehler auf seine eigene Weise anzeigt. Bei einer HTML-Anwendung ergibt ein JSON mit Fehlern keinen Sinn: Wir möchten <strong>das Formular mit seinen Fehlern erneut anzeigen</strong>. Das folgende Beispiel zeigt, wie man die Kontrolle übernimmt.</p>
+<h2 id="33-beispiel-09-von-der-action-durchgefuhrte-validierung">3.3. <span style="color: #2e74b5">Beispiel 09: Von der Action durchgeführte Validierung</span></h2>
+<p>Beispiel 09 hat keine globale <strong><em>[ValidationPipe]</em></strong>. Die Action wandelt das Modell selbst um und validiert es mit denselben Dekoratoren (die Datei <strong><em>[person.dto.ts]</em></strong> ist identisch):</p>
+<p>Die Datei <strong><em>[src/persons.controller.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-26-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-26-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-26-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-26-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-26-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-26-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-26-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-26-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-26-10">10</a></span>
+<span class="normal"><a href="#__codelineno-26-11">11</a></span>
+<span class="normal"><a href="#__codelineno-26-12">12</a></span>
+<span class="normal"><a href="#__codelineno-26-13">13</a></span>
+<span class="normal"><a href="#__codelineno-26-14">14</a></span>
+<span class="normal"><a href="#__codelineno-26-15">15</a></span>
+<span class="normal"><a href="#__codelineno-26-16">16</a></span>
+<span class="normal"><a href="#__codelineno-26-17">17</a></span>
+<span class="normal"><a href="#__codelineno-26-18">18</a></span>
+<span class="normal"><a href="#__codelineno-26-19">19</a></span>
+<span class="normal"><a href="#__codelineno-26-20">20</a></span>
+<span class="normal"><a href="#__codelineno-26-21">21</a></span>
+<span class="normal"><a href="#__codelineno-26-22">22</a></span>
+<span class="normal"><a href="#__codelineno-26-23">23</a></span>
+<span class="normal"><a href="#__codelineno-26-24">24</a></span>
+<span class="normal"><a href="#__codelineno-26-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Controller</span><span class="p">,</span><span class="w"> </span><span class="nx">Get</span><span class="p">,</span><span class="w"> </span><span class="nx">Query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">plainToInstance</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'class-transformer'</span><span class="p">;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">validate</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'class-validator'</span><span class="p">;</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PersonDto</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./person.dto'</span><span class="p">;</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="kd">@Controller</span><span class="p">(</span><span class="s1">'persons'</span><span class="p">)</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">PersonsController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8"></a><span class="w">  </span><span class="c1">// keine ValidationPipe hier: die Action erhält die ROHEN Parameter und</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9"></a><span class="w">  </span><span class="c1">// entscheidet selbst, wie sie mit den Fehlern umgeht</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action01'</span><span class="p">)</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11"></a><span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">action01</span><span class="p">(</span><span class="kd">@Query</span><span class="p">()</span><span class="w"> </span><span class="nx">raw</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12"></a><span class="w">    </span><span class="c1">// 1. rohes Objekt -&gt; PersonDto-Instanz (inklusive @Type-Konvertierungen)</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">plainToInstance</span><span class="p">(</span><span class="nx">PersonDto</span><span class="p">,</span><span class="w"> </span><span class="nx">raw</span><span class="p">);</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14"></a><span class="w">    </span><span class="c1">// 2. Prüfung der Constraints (@IsNotEmpty, @Min ...)</span>
+<a id="__codelineno-26-15" name="__codelineno-26-15"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">validate</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+<a id="__codelineno-26-16" name="__codelineno-26-16"></a><span class="w">    </span><span class="c1">// 3. in beiden Fällen eine HTML-Seite: kein 400-Fehler</span>
+<a id="__codelineno-26-17" name="__codelineno-26-17"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">errors</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-18" name="__codelineno-26-18"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="sb">`&lt;p&gt;Welcome </span><span class="si">${</span><span class="nx">person</span><span class="p">.</span><span class="nx">title</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb"> (</span><span class="si">${</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="si">}</span><span class="sb"> years old)&lt;/p&gt;`</span><span class="p">;</span>
+<a id="__codelineno-26-19" name="__codelineno-26-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-20" name="__codelineno-26-20"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">errors</span>
+<a id="__codelineno-26-21" name="__codelineno-26-21"></a><span class="w">      </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="sb">`&lt;li&gt;</span><span class="si">${</span><span class="nx">e</span><span class="p">.</span><span class="nx">property</span><span class="si">}</span><span class="sb">: </span><span class="si">${</span><span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">constraints</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="p">{</span><span class="si">}</span><span class="sb">).join(', ')}&lt;/li&gt;`</span><span class="p">)</span>
+<a id="__codelineno-26-22" name="__codelineno-26-22"></a><span class="w">      </span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">);</span>
+<a id="__codelineno-26-23" name="__codelineno-26-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`&lt;p&gt;The form contains errors:&lt;/p&gt;&lt;ul&gt;</span><span class="si">${</span><span class="nx">items</span><span class="si">}</span><span class="sb">&lt;/ul&gt;`</span><span class="p">;</span>
+<a id="__codelineno-26-24" name="__codelineno-26-24"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-25" name="__codelineno-26-25"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeile 11: Die Action erhält die <strong>rohen</strong> Parameter: ein Objekt, dessen Felder alle Strings sind;</li>
+<li>Zeile 13: <strong><em>[plainToInstance]</em></strong> (<em>[class-transformer]</em>) erzeugt aus dem rohen Objekt eine Instanz von <strong><em>[PersonDto]</em></strong> und wendet dabei die Umwandlungen an (<strong><em>[@Type]</em></strong>);</li>
+<li>Zeile 15: <strong><em>[validate]</em></strong> (<em>[class-validator]</em>) prüft alle Einschränkungen. Es gibt ein Array mit Fehlern zurück, das leer ist, wenn alles in Ordnung ist. Jeder Fehler nennt das betroffene Feld (<strong><em>[property]</em></strong>) und die Meldungen der verletzten Einschränkungen (<strong><em>[constraints]</em></strong>);</li>
+<li>Zeilen 17–18: keine Fehler – eine Willkommensseite;</li>
+<li>Zeilen 20–23: andernfalls eine Seite, die die Fehler auflistet. In beiden Fällen ist die Antwort eine HTML-Seite mit dem Statuscode 200.</li>
+</ul>
+<p><img src="images/10000000000002BE00000070A58CDF9F.png" width="428" height="68" style="width:11.322cm;height:1.806cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE00000070A58CDF9F.png" /></p>
+<p><img src="images/10000000000002BE000000D43EC098B7.png" width="428" height="129" style="width:11.322cm;height:3.418cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000D43EC098B7.png" /></p>
+<p>Dies ist die Technik, die alle Formulare der Fallstudie verwenden werden (siehe Beispiel 19).</p>
+<h2 id="34-beispiel-10-mehrfache-parameter">3.4. <span style="color: #2e74b5">Beispiel 10: Mehrfache Parameter</span></h2>
+<p>Ein einzelner Parameter kann in einer Anfrage mehrfach vorkommen: Das ist bei Kontrollkästchen in einem Formular oder einer Mehrfachauswahlliste der Fall (<strong><em>[?color=red&amp;color=green]</em></strong>).</p>
+<p>Die Datei <strong><em>[src/arrays.controller.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-27-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-27-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-27-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-27-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-27-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-27-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-27-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-27-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-27-10">10</a></span>
+<span class="normal"><a href="#__codelineno-27-11">11</a></span>
+<span class="normal"><a href="#__codelineno-27-12">12</a></span>
+<span class="normal"><a href="#__codelineno-27-13">13</a></span>
+<span class="normal"><a href="#__codelineno-27-14">14</a></span>
+<span class="normal"><a href="#__codelineno-27-15">15</a></span>
+<span class="normal"><a href="#__codelineno-27-16">16</a></span>
+<span class="normal"><a href="#__codelineno-27-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Controller</span><span class="p">,</span><span class="w"> </span><span class="nx">Get</span><span class="p">,</span><span class="w"> </span><span class="nx">Query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ChoiceDto</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./choice.dto'</span><span class="p">;</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a>
+<a id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="kd">@Controller</span><span class="p">(</span><span class="s1">'arrays'</span><span class="p">)</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ArraysController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6"></a><span class="w">  </span><span class="c1">// /arrays/action01?color=red&amp;color=green: was Express empfängt</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action01'</span><span class="p">)</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8"></a><span class="w">  </span><span class="nx">action01</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">'color'</span><span class="p">)</span><span class="w"> </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">string</span><span class="p">[])</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">color</span><span class="p">,</span><span class="w"> </span><span class="nx">isAnArray</span><span class="o">:</span><span class="w"> </span><span class="kt">Array.isArray</span><span class="p">(</span><span class="nx">color</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11"></a>
+<a id="__codelineno-27-12" name="__codelineno-27-12"></a><span class="w">  </span><span class="c1">// /arrays/action02?color=red: dank ChoiceDto immer ein Array</span>
+<a id="__codelineno-27-13" name="__codelineno-27-13"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'action02'</span><span class="p">)</span>
+<a id="__codelineno-27-14" name="__codelineno-27-14"></a><span class="w">  </span><span class="nx">action02</span><span class="p">(</span><span class="kd">@Query</span><span class="p">()</span><span class="w"> </span><span class="nx">choice</span><span class="o">:</span><span class="w"> </span><span class="kt">ChoiceDto</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-15" name="__codelineno-27-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">colors</span><span class="o">:</span><span class="w"> </span><span class="kt">choice.color</span><span class="p">,</span><span class="w"> </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="kt">choice.color.length</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-27-16" name="__codelineno-27-16"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-27-17" name="__codelineno-27-17"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Die Action <strong><em>[action01]</em></strong> (Zeilen 7–10) zeigt, was eine Action empfängt:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a>curl -i "http://localhost:3000/arrays/action01?color=red"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span>
+<span class="normal"><a href="#__codelineno-29-3">3</a></span>
+<span class="normal"><a href="#__codelineno-29-4">4</a></span>
+<span class="normal"><a href="#__codelineno-29-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-29-2" name="__codelineno-29-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-29-3" name="__codelineno-29-3"></a>Content-Length: 33
+<a id="__codelineno-29-4" name="__codelineno-29-4"></a>
+<a id="__codelineno-29-5" name="__codelineno-29-5"></a>{"color":"red","isAnArray":false}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a>curl -i "http://localhost:3000/arrays/action01?color=red&amp;color=green"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span>
+<span class="normal"><a href="#__codelineno-31-2">2</a></span>
+<span class="normal"><a href="#__codelineno-31-3">3</a></span>
+<span class="normal"><a href="#__codelineno-31-4">4</a></span>
+<span class="normal"><a href="#__codelineno-31-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-31-2" name="__codelineno-31-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-31-3" name="__codelineno-31-3"></a>Content-Length: 42
+<a id="__codelineno-31-4" name="__codelineno-31-4"></a>
+<a id="__codelineno-31-5" name="__codelineno-31-5"></a>{"color":["red","green"],"isAnArray":true}
+</code></pre></div></td></tr></table></div>
+<p>Der Typ hängt von der Anzahl der Werte ab: ein String bei einem einzelnen Wert, ein Array bei mehreren Werten. Das ist eine häufige Falle. Die Klasse <strong><em>[ChoiceDto]</em></strong> behandelt beide Fälle als Array:</p>
+<p>Die Datei <strong><em>[src/choice.dto.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-32-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-32-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-32-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-32-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-32-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-32-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-32-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-32-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-32-10">10</a></span>
+<span class="normal"><a href="#__codelineno-32-11">11</a></span>
+<span class="normal"><a href="#__codelineno-32-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Transform</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'class-transformer'</span><span class="p">;</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ArrayMinSize</span><span class="p">,</span><span class="w"> </span><span class="nx">IsArray</span><span class="p">,</span><span class="w"> </span><span class="nx">IsIn</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'class-validator'</span><span class="p">;</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3"></a>
+<a id="__codelineno-32-4" name="__codelineno-32-4"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ChoiceDto</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5"></a><span class="w">  </span><span class="c1">// ?color=red -&gt; "red"; ?color=red&amp;color=green -&gt; ["red","green"]</span>
+<a id="__codelineno-32-6" name="__codelineno-32-6"></a><span class="w">  </span><span class="c1">// @Transform macht in beiden Fällen ein Array daraus</span>
+<a id="__codelineno-32-7" name="__codelineno-32-7"></a><span class="w">  </span><span class="kd">@Transform</span><span class="p">(({</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">value</span><span class="p">]))</span>
+<a id="__codelineno-32-8" name="__codelineno-32-8"></a><span class="w">  </span><span class="kd">@IsArray</span><span class="p">()</span>
+<a id="__codelineno-32-9" name="__codelineno-32-9"></a><span class="w">  </span><span class="kd">@ArrayMinSize</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'choose at least one color'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-32-10" name="__codelineno-32-10"></a><span class="w">  </span><span class="kd">@IsIn</span><span class="p">([</span><span class="s1">'red'</span><span class="p">,</span><span class="w"> </span><span class="s1">'green'</span><span class="p">,</span><span class="w"> </span><span class="s1">'blue'</span><span class="p">],</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">each</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'unknown color'</span><span class="w"> </span><span class="p">})</span>
+<a id="__codelineno-32-11" name="__codelineno-32-11"></a><span class="w">  </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[];</span>
+<a id="__codelineno-32-12" name="__codelineno-32-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 7: <strong><em>[@Transform]</em></strong> (<em>[class-transformer]</em>) wendet eine Umwandlungsfunktion auf das Feld an: Ein einzelner Wert wird in ein Array gelegt;</li>
+<li>Zeile 8: Das Feld muss ein Array sein ...</li>
+<li>Zeile 9: ... mit mindestens einem Element ...</li>
+<li>Zeile 10: ... und jedes Element (<strong><em>[each: true]</em></strong>) muss in der Liste enthalten sein.</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1"></a>curl -i "http://localhost:3000/arrays/action02?color=red"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span>
+<span class="normal"><a href="#__codelineno-34-2">2</a></span>
+<span class="normal"><a href="#__codelineno-34-3">3</a></span>
+<span class="normal"><a href="#__codelineno-34-4">4</a></span>
+<span class="normal"><a href="#__codelineno-34-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-34-2" name="__codelineno-34-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-34-3" name="__codelineno-34-3"></a>Content-Length: 28
+<a id="__codelineno-34-4" name="__codelineno-34-4"></a>
+<a id="__codelineno-34-5" name="__codelineno-34-5"></a>{"colors":["red"],"count":1}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1"></a>curl -i "http://localhost:3000/arrays/action02?color=red&amp;color=green"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span>
+<span class="normal"><a href="#__codelineno-36-2">2</a></span>
+<span class="normal"><a href="#__codelineno-36-3">3</a></span>
+<span class="normal"><a href="#__codelineno-36-4">4</a></span>
+<span class="normal"><a href="#__codelineno-36-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-36-2" name="__codelineno-36-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-36-3" name="__codelineno-36-3"></a>Content-Length: 36
+<a id="__codelineno-36-4" name="__codelineno-36-4"></a>
+<a id="__codelineno-36-5" name="__codelineno-36-5"></a>{"colors":["red","green"],"count":2}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1"></a>curl -i "http://localhost:3000/arrays/action02?color=red&amp;color=black"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span>
+<span class="normal"><a href="#__codelineno-38-2">2</a></span>
+<span class="normal"><a href="#__codelineno-38-3">3</a></span>
+<span class="normal"><a href="#__codelineno-38-4">4</a></span>
+<span class="normal"><a href="#__codelineno-38-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-38-2" name="__codelineno-38-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-38-3" name="__codelineno-38-3"></a>Content-Length: 68
+<a id="__codelineno-38-4" name="__codelineno-38-4"></a>
+<a id="__codelineno-38-5" name="__codelineno-38-5"></a>{"message":["unknown color"],"error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<h2 id="35-beispiel-11-parameter-einer-post-anfrage">3.5. <span style="color: #2e74b5">Beispiel 11: Parameter einer POST-Anfrage</span></h2>
+<p>Ein per POST-Methode gesendetes HTML-Formular legt seine Felder in den <strong>Rumpf</strong> der Anfrage, nicht in die URL. Der Dekorator <strong><em>[@Body]</em></strong> ersetzt dann <strong><em>[@Query]</em></strong>:</p>
+<p>Die Datei <strong><em>[src/post.controller.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-39-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-39-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-39-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-39-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-39-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-39-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-39-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-39-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-39-10">10</a></span>
+<span class="normal"><a href="#__codelineno-39-11">11</a></span>
+<span class="normal"><a href="#__codelineno-39-12">12</a></span>
+<span class="normal"><a href="#__codelineno-39-13">13</a></span>
+<span class="normal"><a href="#__codelineno-39-14">14</a></span>
+<span class="normal"><a href="#__codelineno-39-15">15</a></span>
+<span class="normal"><a href="#__codelineno-39-16">16</a></span>
+<span class="normal"><a href="#__codelineno-39-17">17</a></span>
+<span class="normal"><a href="#__codelineno-39-18">18</a></span>
+<span class="normal"><a href="#__codelineno-39-19">19</a></span>
+<span class="normal"><a href="#__codelineno-39-20">20</a></span>
+<span class="normal"><a href="#__codelineno-39-21">21</a></span>
+<span class="normal"><a href="#__codelineno-39-22">22</a></span>
+<span class="normal"><a href="#__codelineno-39-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Body</span><span class="p">,</span><span class="w"> </span><span class="nx">Controller</span><span class="p">,</span><span class="w"> </span><span class="nx">Headers</span><span class="p">,</span><span class="w"> </span><span class="nx">Post</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PersonDto</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./person.dto'</span><span class="p">;</span>
+<a id="__codelineno-39-3" name="__codelineno-39-3"></a>
+<a id="__codelineno-39-4" name="__codelineno-39-4"></a><span class="kd">@Controller</span><span class="p">(</span><span class="s1">'post'</span><span class="p">)</span>
+<a id="__codelineno-39-5" name="__codelineno-39-5"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">PostController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-39-6" name="__codelineno-39-6"></a><span class="w">  </span><span class="c1">// der Anfragekörper, unverändert</span>
+<a id="__codelineno-39-7" name="__codelineno-39-7"></a><span class="w">  </span><span class="kd">@Post</span><span class="p">(</span><span class="s1">'action01'</span><span class="p">)</span>
+<a id="__codelineno-39-8" name="__codelineno-39-8"></a><span class="w">  </span><span class="nx">action01</span><span class="p">(</span><span class="kd">@Body</span><span class="p">()</span><span class="w"> </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">unknown</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kd">@Headers</span><span class="p">(</span><span class="s1">'content-type'</span><span class="p">)</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-39-9" name="__codelineno-39-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">receivedType</span><span class="o">:</span><span class="w"> </span><span class="kt">type</span><span class="p">,</span><span class="w"> </span><span class="nx">body</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-39-10" name="__codelineno-39-10"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-39-11" name="__codelineno-39-11"></a>
+<a id="__codelineno-39-12" name="__codelineno-39-12"></a><span class="w">  </span><span class="c1">// ein einzelnes Feld des Anfragekörpers</span>
+<a id="__codelineno-39-13" name="__codelineno-39-13"></a><span class="w">  </span><span class="kd">@Post</span><span class="p">(</span><span class="s1">'action02'</span><span class="p">)</span>
+<a id="__codelineno-39-14" name="__codelineno-39-14"></a><span class="w">  </span><span class="nx">action02</span><span class="p">(</span><span class="kd">@Body</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-39-15" name="__codelineno-39-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`name = [</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">]`</span><span class="p">;</span>
+<a id="__codelineno-39-16" name="__codelineno-39-16"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-39-17" name="__codelineno-39-17"></a>
+<a id="__codelineno-39-18" name="__codelineno-39-18"></a><span class="w">  </span><span class="c1">// der Anfragekörper, konvertiert und validiert durch die Klasse PersonDto</span>
+<a id="__codelineno-39-19" name="__codelineno-39-19"></a><span class="w">  </span><span class="kd">@Post</span><span class="p">(</span><span class="s1">'action03'</span><span class="p">)</span>
+<a id="__codelineno-39-20" name="__codelineno-39-20"></a><span class="w">  </span><span class="nx">action03</span><span class="p">(</span><span class="kd">@Body</span><span class="p">()</span><span class="w"> </span><span class="nx">person</span><span class="o">:</span><span class="w"> </span><span class="kt">PersonDto</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-39-21" name="__codelineno-39-21"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">person</span><span class="p">,</span><span class="w"> </span><span class="nx">ageType</span><span class="o">:</span><span class="w"> </span><span class="kt">typeof</span><span class="w"> </span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-39-22" name="__codelineno-39-22"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-39-23" name="__codelineno-39-23"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 7–10: <strong><em>[@Body()]</em></strong> injiziert den Rumpf der Anfrage, der bereits von <em>[NestJS]</em> dekodiert wurde. <strong><em>[@Headers(&#x27;content-type&#x27;)]</em></strong> injiziert einen Header der Anfrage: den Typ des Rumpfs;</li>
+<li>Zeilen 13–16: <strong><em>[@Body(&#x27;name&#x27;)]</em></strong> injiziert ein einzelnes Feld aus dem Rumpf;</li>
+<li>Zeilen 19–22: Wie bei <strong><em>[@Query]</em></strong> kann der Rumpf durch eine Klasse beschrieben und von der globalen <strong><em>[ValidationPipe]</em></strong> validiert werden.</li>
+</ul>
+<p>Die Option <strong><em>[-d]</em></strong> von <em>[curl]</em> sendet eine POST-Anfrage mit einem Rumpf im Format eines HTML-Formulars (<strong><em>[application/x-www-form-urlencoded]</em></strong>):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1"></a>curl -i -d "name=martin&amp;age=42" http://localhost:3000/post/action01
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span>
+<span class="normal"><a href="#__codelineno-41-2">2</a></span>
+<span class="normal"><a href="#__codelineno-41-3">3</a></span>
+<span class="normal"><a href="#__codelineno-41-4">4</a></span>
+<span class="normal"><a href="#__codelineno-41-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1"></a>HTTP/1.1 201 Created
+<a id="__codelineno-41-2" name="__codelineno-41-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-41-3" name="__codelineno-41-3"></a>Content-Length: 88
+<a id="__codelineno-41-4" name="__codelineno-41-4"></a>
+<a id="__codelineno-41-5" name="__codelineno-41-5"></a>{"receivedType":"application/x-www-form-urlencoded","body":{"name":"martin","age":"42"}}
+</code></pre></div></td></tr></table></div>
+<p>Derselbe Rumpf im JSON-Format (das sendet ein Client in <em>[JavaScript]</em>):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1"></a>curl -i -H "Content-Type: application/json" -d '{"name":"martin","age":42}' http://localhost:3000/post/action01
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span>
+<span class="normal"><a href="#__codelineno-43-2">2</a></span>
+<span class="normal"><a href="#__codelineno-43-3">3</a></span>
+<span class="normal"><a href="#__codelineno-43-4">4</a></span>
+<span class="normal"><a href="#__codelineno-43-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1"></a>HTTP/1.1 201 Created
+<a id="__codelineno-43-2" name="__codelineno-43-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-43-3" name="__codelineno-43-3"></a>Content-Length: 69
+<a id="__codelineno-43-4" name="__codelineno-43-4"></a>
+<a id="__codelineno-43-5" name="__codelineno-43-5"></a>{"receivedType":"application/json","body":{"name":"martin","age":42}}
+</code></pre></div></td></tr></table></div>
+<p><em>[NestJS]</em> dekodiert beide Formate. Beachten Sie, dass „age“ im ersten Fall ein String ist (ein HTML-Formular überträgt nur Text) und im zweiten Fall eine Zahl. Die beiden anderen Actions:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1"></a>curl -i -d "name=martin&amp;age=42" http://localhost:3000/post/action02
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span>
+<span class="normal"><a href="#__codelineno-45-2">2</a></span>
+<span class="normal"><a href="#__codelineno-45-3">3</a></span>
+<span class="normal"><a href="#__codelineno-45-4">4</a></span>
+<span class="normal"><a href="#__codelineno-45-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1"></a>HTTP/1.1 201 Created
+<a id="__codelineno-45-2" name="__codelineno-45-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-45-3" name="__codelineno-45-3"></a>Content-Length: 15
+<a id="__codelineno-45-4" name="__codelineno-45-4"></a>
+<a id="__codelineno-45-5" name="__codelineno-45-5"></a>name = [martin]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1"></a>curl -i -d "name=martin&amp;age=42&amp;title=Mme" http://localhost:3000/post/action03
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1">1</a></span>
+<span class="normal"><a href="#__codelineno-47-2">2</a></span>
+<span class="normal"><a href="#__codelineno-47-3">3</a></span>
+<span class="normal"><a href="#__codelineno-47-4">4</a></span>
+<span class="normal"><a href="#__codelineno-47-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1"></a>HTTP/1.1 201 Created
+<a id="__codelineno-47-2" name="__codelineno-47-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-47-3" name="__codelineno-47-3"></a>Content-Length: 70
+<a id="__codelineno-47-4" name="__codelineno-47-4"></a>
+<a id="__codelineno-47-5" name="__codelineno-47-5"></a>{"person":{"name":"martin","age":42,"title":"Mme"},"ageType":"number"}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1"></a>curl -i -d "name=martin&amp;age=200" http://localhost:3000/post/action03
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span>
+<span class="normal"><a href="#__codelineno-49-2">2</a></span>
+<span class="normal"><a href="#__codelineno-49-3">3</a></span>
+<span class="normal"><a href="#__codelineno-49-4">4</a></span>
+<span class="normal"><a href="#__codelineno-49-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-49-2" name="__codelineno-49-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-49-3" name="__codelineno-49-3"></a>Content-Length: 96
+<a id="__codelineno-49-4" name="__codelineno-49-4"></a>
+<a id="__codelineno-49-5" name="__codelineno-49-5"></a>{"message":["the age cannot exceed 150","unknown title"],"error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<p>Der Code 201 (<strong>Created</strong>) ist für <em>[NestJS]</em> der Standardcode für ein POST. Bei einer HTML-Anwendung antwortet eine POST-Action entweder mit einer Seite (dann wird <strong><em>[@HttpCode(200)]</em></strong> hinzugefügt) oder mit einer Weiterleitung (siehe Beispiel 20).</p>
+<h2 id="36-beispiel-12-eigene-pipes-und-dekoratoren">3.6. <span style="color: #2e74b5">Beispiel 12: Eigene Pipes und Dekoratoren</span></h2>
+<p>Sie können eigene Pipes und Parameterdekoratoren schreiben. Die Fallstudie nutzt sie nur in Maßen, aber sie zu verstehen hilft, die von <em>[NestJS]</em> zu verstehen.</p>
+<h3 id="361-eine-pipe-datefrpipe">3.6.1. <span style="color: #1f4d78">Eine Pipe: DateFrPipe</span></h3>
+<p>Die Datei <strong><em>[src/date-fr.pipe.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-50-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-50-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-50-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-50-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-50-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-50-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-50-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-50-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-50-10">10</a></span>
+<span class="normal"><a href="#__codelineno-50-11">11</a></span>
+<span class="normal"><a href="#__codelineno-50-12">12</a></span>
+<span class="normal"><a href="#__codelineno-50-13">13</a></span>
+<span class="normal"><a href="#__codelineno-50-14">14</a></span>
+<span class="normal"><a href="#__codelineno-50-15">15</a></span>
+<span class="normal"><a href="#__codelineno-50-16">16</a></span>
+<span class="normal"><a href="#__codelineno-50-17">17</a></span>
+<span class="normal"><a href="#__codelineno-50-18">18</a></span>
+<span class="normal"><a href="#__codelineno-50-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">BadRequestException</span><span class="p">,</span><span class="w"> </span><span class="nx">Injectable</span><span class="p">,</span><span class="w"> </span><span class="nx">PipeTransform</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-50-2" name="__codelineno-50-2"></a>
+<a id="__codelineno-50-3" name="__codelineno-50-3"></a><span class="c1">// wandelt ein französisches Datum "23/09/2026" in ein ISO-Datum "2026-09-23" um</span>
+<a id="__codelineno-50-4" name="__codelineno-50-4"></a><span class="kd">@Injectable</span><span class="p">()</span>
+<a id="__codelineno-50-5" name="__codelineno-50-5"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">DateFrPipe</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">PipeTransform</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-50-6" name="__codelineno-50-6"></a><span class="w">  </span><span class="nx">transform</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-50-7" name="__codelineno-50-7"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sr">/^(\d{2})\/(\d{2})\/(\d{4})$/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">value</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">);</span>
+<a id="__codelineno-50-8" name="__codelineno-50-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">m</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-50-9" name="__codelineno-50-9"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">BadRequestException</span><span class="p">(</span><span class="sb">`[</span><span class="si">${</span><span class="nx">value</span><span class="si">}</span><span class="sb">] is not a date in the dd/mm/yyyy format`</span><span class="p">);</span>
+<a id="__codelineno-50-10" name="__codelineno-50-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-50-11" name="__codelineno-50-11"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">[,</span><span class="w"> </span><span class="nx">day</span><span class="p">,</span><span class="w"> </span><span class="nx">month</span><span class="p">,</span><span class="w"> </span><span class="nx">year</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">m</span><span class="p">;</span>
+<a id="__codelineno-50-12" name="__codelineno-50-12"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">iso</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">year</span><span class="si">}</span><span class="sb">-</span><span class="si">${</span><span class="nx">month</span><span class="si">}</span><span class="sb">-</span><span class="si">${</span><span class="nx">day</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<a id="__codelineno-50-13" name="__codelineno-50-13"></a><span class="w">    </span><span class="c1">// "31/02/2026" hat die richtige Form, existiert aber nicht</span>
+<a id="__codelineno-50-14" name="__codelineno-50-14"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">iso</span><span class="si">}</span><span class="sb">T00:00:00Z`</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">iso</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-50-15" name="__codelineno-50-15"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">BadRequestException</span><span class="p">(</span><span class="sb">`the date [</span><span class="si">${</span><span class="nx">value</span><span class="si">}</span><span class="sb">] does not exist`</span><span class="p">);</span>
+<a id="__codelineno-50-16" name="__codelineno-50-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-50-17" name="__codelineno-50-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">iso</span><span class="p">;</span>
+<a id="__codelineno-50-18" name="__codelineno-50-18"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-50-19" name="__codelineno-50-19"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 4–5: Eine Pipe ist eine Klasse mit <strong><em>[@Injectable()]</em></strong> , die das Interface <strong><em>[PipeTransform&lt;input, output&gt;]</em></strong> implementiert;</li>
+<li>Zeile 6: Ihre Methode <strong><em>[transform]</em></strong> erhält den Wert des Parameters und gibt den umgewandelten Wert zurück, den die Action empfängt;</li>
+<li>Zeilen 7–9: Ein Wert, der nicht die Form <strong><em>[dd/mm/yyyy]</em></strong>  hat, löst eine <strong><em>[BadRequestException]</em></strong>  (400) aus;</li>
+<li>Zeilen 13–15: Ein Datum, das im richtigen Format vorliegt, aber nicht existiert (31/02/2026), wird ebenfalls abgelehnt: <strong><em>[new Date]</em></strong> „korrigiert“ es auf den 03/03/2026, was erkannt wird.</li>
+</ul>
+<h3 id="362-ein-parameterdekorator-language">3.6.2. <span style="color: #1f4d78">Ein Parameterdekorator: @Language()</span></h3>
+<p>Die Datei <strong><em>[src/language.decorator.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-51-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-51-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-51-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-51-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-51-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-51-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-51-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-51-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-51-10">10</a></span>
+<span class="normal"><a href="#__codelineno-51-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createParamDecorator</span><span class="p">,</span><span class="w"> </span><span class="nx">ExecutionContext</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-51-2" name="__codelineno-51-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Request</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'express'</span><span class="p">;</span>
+<a id="__codelineno-51-3" name="__codelineno-51-3"></a>
+<a id="__codelineno-51-4" name="__codelineno-51-4"></a><span class="c1">// @Language(): die bevorzugte Sprache des Browsers, aus dem Header gelesen</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5"></a><span class="c1">// "Accept-Language: fr-FR,fr;q=0.9,en;q=0.8" -&gt; "fr"</span>
+<a id="__codelineno-51-6" name="__codelineno-51-6"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">Language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createParamDecorator</span><span class="p">((</span><span class="nx">fallback</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="p">,</span><span class="w"> </span><span class="nx">ctx</span><span class="o">:</span><span class="w"> </span><span class="kt">ExecutionContext</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-51-7" name="__codelineno-51-7"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">switchToHttp</span><span class="p">().</span><span class="nx">getRequest</span><span class="o">&lt;</span><span class="nx">Request</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-51-8" name="__codelineno-51-8"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'accept-language'</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">;</span>
+<a id="__codelineno-51-9" name="__codelineno-51-9"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">header</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)[</span><span class="mf">0</span><span class="p">].</span><span class="nx">trim</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">();</span>
+<a id="__codelineno-51-10" name="__codelineno-51-10"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">first</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">fallback</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">'fr'</span><span class="p">;</span>
+<a id="__codelineno-51-11" name="__codelineno-51-11"></a><span class="p">});</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 6: <strong><em>[createParamDecorator]</em></strong> erzeugt einen Parameterdekorator, ähnlich wie <strong><em>[@Query]</em></strong> oder <strong><em>[@Body]</em></strong>. Die Funktion erhält das Argument des Dekorators (<strong><em>[@Language(&#x27;fr&#x27;)]</em></strong>) und den <strong>Ausführungskontext</strong> der Anfrage;</li>
+<li>Zeile 7: Der Kontext ermöglicht den Zugriff auf die <em>[Express]</em>-Anfrage;</li>
+<li>Zeilen 8–10: Es werden die ersten zwei Buchstaben des Headers <strong><em>[Accept-Language]</em></strong> zurückgegeben, der die bevorzugten Sprachen des Benutzers angibt.</li>
+</ul>
+<h3 id="363-der-controller">3.6.3. <span style="color: #1f4d78">Der Controller</span></h3>
+<p>Die Datei <strong><em>[src/examples.controller.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-52-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-52-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-52-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-52-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-52-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-52-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-52-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-52-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-52-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-52-10">10</a></span>
+<span class="normal"><a href="#__codelineno-52-11">11</a></span>
+<span class="normal"><a href="#__codelineno-52-12">12</a></span>
+<span class="normal"><a href="#__codelineno-52-13">13</a></span>
+<span class="normal"><a href="#__codelineno-52-14">14</a></span>
+<span class="normal"><a href="#__codelineno-52-15">15</a></span>
+<span class="normal"><a href="#__codelineno-52-16">16</a></span>
+<span class="normal"><a href="#__codelineno-52-17">17</a></span>
+<span class="normal"><a href="#__codelineno-52-18">18</a></span>
+<span class="normal"><a href="#__codelineno-52-19">19</a></span>
+<span class="normal"><a href="#__codelineno-52-20">20</a></span>
+<span class="normal"><a href="#__codelineno-52-21">21</a></span>
+<span class="normal"><a href="#__codelineno-52-22">22</a></span>
+<span class="normal"><a href="#__codelineno-52-23">23</a></span>
+<span class="normal"><a href="#__codelineno-52-24">24</a></span>
+<span class="normal"><a href="#__codelineno-52-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Controller</span><span class="p">,</span><span class="w"> </span><span class="nx">Get</span><span class="p">,</span><span class="w"> </span><span class="nx">Query</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">DateFrPipe</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./date-fr.pipe'</span><span class="p">;</span>
+<a id="__codelineno-52-3" name="__codelineno-52-3"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Language</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./language.decorator'</span><span class="p">;</span>
+<a id="__codelineno-52-4" name="__codelineno-52-4"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">SearchDto</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./search.dto'</span><span class="p">;</span>
+<a id="__codelineno-52-5" name="__codelineno-52-5"></a>
+<a id="__codelineno-52-6" name="__codelineno-52-6"></a><span class="kd">@Controller</span><span class="p">(</span><span class="s1">'examples'</span><span class="p">)</span>
+<a id="__codelineno-52-7" name="__codelineno-52-7"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">ExamplesController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-52-8" name="__codelineno-52-8"></a><span class="w">  </span><span class="c1">// /examples/schedule?day=23/09/2026: eine eigene Pipe</span>
+<a id="__codelineno-52-9" name="__codelineno-52-9"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'schedule'</span><span class="p">)</span>
+<a id="__codelineno-52-10" name="__codelineno-52-10"></a><span class="w">  </span><span class="nx">schedule</span><span class="p">(</span><span class="kd">@Query</span><span class="p">(</span><span class="s1">'day'</span><span class="p">,</span><span class="w"> </span><span class="nx">DateFrPipe</span><span class="p">)</span><span class="w"> </span><span class="nx">day</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-52-11" name="__codelineno-52-11"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="sb">`schedule for the day [</span><span class="si">${</span><span class="nx">day</span><span class="si">}</span><span class="sb">]`</span><span class="p">;</span>
+<a id="__codelineno-52-12" name="__codelineno-52-12"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-52-13" name="__codelineno-52-13"></a>
+<a id="__codelineno-52-14" name="__codelineno-52-14"></a><span class="w">  </span><span class="c1">// /examples/hello: ein eigener Parameter-Dekorator</span>
+<a id="__codelineno-52-15" name="__codelineno-52-15"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">)</span>
+<a id="__codelineno-52-16" name="__codelineno-52-16"></a><span class="w">  </span><span class="nx">hello</span><span class="p">(</span><span class="kd">@Language</span><span class="p">(</span><span class="s1">'fr'</span><span class="p">)</span><span class="w"> </span><span class="nx">language</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-52-17" name="__codelineno-52-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">language</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'en'</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">'Hello!'</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">'Bonjour !'</span><span class="p">;</span>
+<a id="__codelineno-52-18" name="__codelineno-52-18"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-52-19" name="__codelineno-52-19"></a>
+<a id="__codelineno-52-20" name="__codelineno-52-20"></a><span class="w">  </span><span class="c1">// /examples/search?keyword=nest&amp;admin=true: [admin] ist nicht deklariert</span>
+<a id="__codelineno-52-21" name="__codelineno-52-21"></a><span class="w">  </span><span class="kd">@Get</span><span class="p">(</span><span class="s1">'search'</span><span class="p">)</span>
+<a id="__codelineno-52-22" name="__codelineno-52-22"></a><span class="w">  </span><span class="nx">search</span><span class="p">(</span><span class="kd">@Query</span><span class="p">()</span><span class="w"> </span><span class="nx">search</span><span class="o">:</span><span class="w"> </span><span class="kt">SearchDto</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-52-23" name="__codelineno-52-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">search</span><span class="p">;</span>
+<a id="__codelineno-52-24" name="__codelineno-52-24"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-52-25" name="__codelineno-52-25"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 10: Die Pipe wird wie <strong><em>[ParseIntPipe]</em></strong> verwendet;</li>
+<li>Zeile 16: Der Dekorator wird wie <strong><em>[@Query]</em></strong> verwendet;</li>
+<li>Zeile 22: ein durch eine Klasse beschriebenes Modell, diesmal mit der Option <strong><em>[forbidNonWhitelisted]</em></strong> der <strong><em>[ValidationPipe]</em></strong> (Datei <strong><em>[main.ts]</em></strong> weiter unten).</li>
+</ul>
+<p>Die Datei <strong><em>[src/main.ts]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-53-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-53-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-53-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-53-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-53-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-53-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-53-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-53-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-53-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-53-10">10</a></span>
+<span class="normal"><a href="#__codelineno-53-11">11</a></span>
+<span class="normal"><a href="#__codelineno-53-12">12</a></span>
+<span class="normal"><a href="#__codelineno-53-13">13</a></span>
+<span class="normal"><a href="#__codelineno-53-14">14</a></span>
+<span class="normal"><a href="#__codelineno-53-15">15</a></span>
+<span class="normal"><a href="#__codelineno-53-16">16</a></span>
+<span class="normal"><a href="#__codelineno-53-17">17</a></span>
+<span class="normal"><a href="#__codelineno-53-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NestFactory</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/core'</span><span class="p">;</span>
+<a id="__codelineno-53-2" name="__codelineno-53-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ValidationPipe</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@nestjs/common'</span><span class="p">;</span>
+<a id="__codelineno-53-3" name="__codelineno-53-3"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AppModule</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'./app.module'</span><span class="p">;</span>
+<a id="__codelineno-53-4" name="__codelineno-53-4"></a>
+<a id="__codelineno-53-5" name="__codelineno-53-5"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">bootstrap</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-53-6" name="__codelineno-53-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">NestFactory</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">AppModule</span><span class="p">);</span>
+<a id="__codelineno-53-7" name="__codelineno-53-7"></a><span class="w">  </span><span class="nx">app</span><span class="p">.</span><span class="nx">useGlobalPipes</span><span class="p">(</span>
+<a id="__codelineno-53-8" name="__codelineno-53-8"></a><span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">ValidationPipe</span><span class="p">({</span>
+<a id="__codelineno-53-9" name="__codelineno-53-9"></a><span class="w">      </span><span class="nx">transform</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-53-10" name="__codelineno-53-10"></a><span class="w">      </span><span class="nx">whitelist</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// die nicht deklarierten Felder werden entfernt ...</span>
+<a id="__codelineno-53-11" name="__codelineno-53-11"></a><span class="w">      </span><span class="nx">forbidNonWhitelisted</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// ... oder mit dieser Option abgelehnt (400)</span>
+<a id="__codelineno-53-12" name="__codelineno-53-12"></a><span class="w">    </span><span class="p">}),</span>
+<a id="__codelineno-53-13" name="__codelineno-53-13"></a><span class="w">  </span><span class="p">);</span>
+<a id="__codelineno-53-14" name="__codelineno-53-14"></a><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">);</span>
+<a id="__codelineno-53-15" name="__codelineno-53-15"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Server started on http://localhost:3000'</span><span class="p">);</span>
+<a id="__codelineno-53-16" name="__codelineno-53-16"></a><span class="p">}</span>
+<a id="__codelineno-53-17" name="__codelineno-53-17"></a>
+<a id="__codelineno-53-18" name="__codelineno-53-18"></a><span class="nx">bootstrap</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<p>Zeile 11: Mit <strong><em>[forbidNonWhitelisted: true]</em></strong> wird ein in der Klasse nicht deklarierter Parameter nicht mehr stillschweigend entfernt, sondern führt zu einem 400-Fehler.</p>
+<p>Die Ergebnisse:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-54-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1"></a>curl -i "http://localhost:3000/examples/schedule?day=23/09/2026"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-55-1">1</a></span>
+<span class="normal"><a href="#__codelineno-55-2">2</a></span>
+<span class="normal"><a href="#__codelineno-55-3">3</a></span>
+<span class="normal"><a href="#__codelineno-55-4">4</a></span>
+<span class="normal"><a href="#__codelineno-55-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-55-2" name="__codelineno-55-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-55-3" name="__codelineno-55-3"></a>Content-Length: 33
+<a id="__codelineno-55-4" name="__codelineno-55-4"></a>
+<a id="__codelineno-55-5" name="__codelineno-55-5"></a>schedule for the day [2026-09-23]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-56-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1"></a>curl -i "http://localhost:3000/examples/schedule?day=2026-09-23"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-57-1">1</a></span>
+<span class="normal"><a href="#__codelineno-57-2">2</a></span>
+<span class="normal"><a href="#__codelineno-57-3">3</a></span>
+<span class="normal"><a href="#__codelineno-57-4">4</a></span>
+<span class="normal"><a href="#__codelineno-57-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-57-2" name="__codelineno-57-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-57-3" name="__codelineno-57-3"></a>Content-Length: 104
+<a id="__codelineno-57-4" name="__codelineno-57-4"></a>
+<a id="__codelineno-57-5" name="__codelineno-57-5"></a>{"message":"[2026-09-23] is not a date in the dd/mm/yyyy format","error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-58-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1"></a>curl -i "http://localhost:3000/examples/schedule?day=31/02/2026"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-59-1">1</a></span>
+<span class="normal"><a href="#__codelineno-59-2">2</a></span>
+<span class="normal"><a href="#__codelineno-59-3">3</a></span>
+<span class="normal"><a href="#__codelineno-59-4">4</a></span>
+<span class="normal"><a href="#__codelineno-59-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-59-2" name="__codelineno-59-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-59-3" name="__codelineno-59-3"></a>Content-Length: 89
+<a id="__codelineno-59-4" name="__codelineno-59-4"></a>
+<a id="__codelineno-59-5" name="__codelineno-59-5"></a>{"message":"the date [31/02/2026] does not exist","error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-60-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1"></a>curl -i -H "Accept-Language: fr-FR,fr;q=0.9" http://localhost:3000/examples/hello
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-61-1">1</a></span>
+<span class="normal"><a href="#__codelineno-61-2">2</a></span>
+<span class="normal"><a href="#__codelineno-61-3">3</a></span>
+<span class="normal"><a href="#__codelineno-61-4">4</a></span>
+<span class="normal"><a href="#__codelineno-61-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-61-2" name="__codelineno-61-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-61-3" name="__codelineno-61-3"></a>Content-Length: 9
+<a id="__codelineno-61-4" name="__codelineno-61-4"></a>
+<a id="__codelineno-61-5" name="__codelineno-61-5"></a>Bonjour !
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-62-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1"></a>curl -i -H "Accept-Language: en-US,en;q=0.9" http://localhost:3000/examples/hello
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-63-1">1</a></span>
+<span class="normal"><a href="#__codelineno-63-2">2</a></span>
+<span class="normal"><a href="#__codelineno-63-3">3</a></span>
+<span class="normal"><a href="#__codelineno-63-4">4</a></span>
+<span class="normal"><a href="#__codelineno-63-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-63-2" name="__codelineno-63-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-63-3" name="__codelineno-63-3"></a>Content-Length: 6
+<a id="__codelineno-63-4" name="__codelineno-63-4"></a>
+<a id="__codelineno-63-5" name="__codelineno-63-5"></a>Hello!
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-64-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1"></a>curl -i "http://localhost:3000/examples/search?keyword=nest"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-65-1">1</a></span>
+<span class="normal"><a href="#__codelineno-65-2">2</a></span>
+<span class="normal"><a href="#__codelineno-65-3">3</a></span>
+<span class="normal"><a href="#__codelineno-65-4">4</a></span>
+<span class="normal"><a href="#__codelineno-65-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-65-2" name="__codelineno-65-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-65-3" name="__codelineno-65-3"></a>Content-Length: 18
+<a id="__codelineno-65-4" name="__codelineno-65-4"></a>
+<a id="__codelineno-65-5" name="__codelineno-65-5"></a>{"keyword":"nest"}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-66-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1"></a>curl -i "http://localhost:3000/examples/search?keyword=nest&amp;admin=true"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-67-1">1</a></span>
+<span class="normal"><a href="#__codelineno-67-2">2</a></span>
+<span class="normal"><a href="#__codelineno-67-3">3</a></span>
+<span class="normal"><a href="#__codelineno-67-4">4</a></span>
+<span class="normal"><a href="#__codelineno-67-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-67-2" name="__codelineno-67-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-67-3" name="__codelineno-67-3"></a>Content-Length: 86
+<a id="__codelineno-67-4" name="__codelineno-67-4"></a>
+<a id="__codelineno-67-5" name="__codelineno-67-5"></a>{"message":["property admin should not exist"],"error":"Bad Request","statusCode":400}
+</code></pre></div></td></tr></table></div>
+<p>(Die Option <strong><em>[-H]</em></strong> von <em>[curl]</em> fügt der Anfrage einen Header hinzu)</p>
+<h3 id="364-fazit">3.6.4. <span style="color: #1f4d78">Fazit</span></h3>
+<p>Das Action-Modell wird von <em>[NestJS]</em> anhand der Anfrage erzeugt: Routenparameter (<strong><em>[@Param]</em></strong>), URL (<strong><em>[@Query]</em></strong>), der Rumpf (<strong><em>[@Body]</em></strong>) und Header (<strong><em>[@Headers]</em></strong>). Die Pipes wandeln diese Werte um und validieren sie. Bei einer HTML-Anwendung ist es meist vorzuziehen, das Modell selbst zu validieren (Beispiel 09), damit Sie das Formular erneut anzeigen können. Das ist das Thema des nächsten Kapitels.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>
